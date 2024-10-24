@@ -21,7 +21,7 @@ def reports():
     cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT cl.nm_cliente AS Cliente, m.ds_tipo_movimentacao AS Tipo, COUNT(cd_movimentacao) AS Total FROM movimentacoes m JOIN containers c ON c.cd_container = m.cd_container JOIN clientes cl ON cl.cd_cliente = c.cd_cliente GROUP BY cl.nm_cliente, m.ds_tipo_movimentacao ORDER BY Total, Cliente")
     reports = cursor.fetchall()
-    cursor.execute("SELECT cl.nm_cliente AS Cliente, c.ds_categoria AS Categoria, COUNT(cl.cd_cliente) AS Total FROM containers c JOIN clientes cl ON c.cd_cliente = cl.cd_cliente GROUP BY cl.nm_cliente, c.ds_categoria ORDER BY c.ds_categoria, cl.nm_cliente, Total") # CÓDIGO CORRIDO - ESTAVA CONTANDO Nº DE CONTAINERS DIFERENTES POR CATEGORIA | NÃO O TOTAL DE CONTAINERS POR CATEGORIA IMPORTAÇÃO E EXPORTAÇÃO
+    cursor.execute("SELECT cl.nm_cliente AS Cliente, c.ds_categoria AS Categoria, COUNT(cl.cd_cliente) AS Total FROM containers c JOIN clientes cl ON c.cd_cliente = cl.cd_cliente GROUP BY cl.nm_cliente, c.ds_categoria ORDER BY c.ds_categoria, cl.nm_cliente, Total")
     reports_categoria = cursor.fetchall()
     cursor.close()
     conn.close()
