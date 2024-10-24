@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Cadastrar Movimentação</title>
+</head>
+<body>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="messages">
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div class="form">
+            <div class="title-form">
+                <span class="title-form">Cadastro de Movimentação</span>
+            </div>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="cd_container">Container:</label>
+                    <select name="cd_container" required>
+                    {% for container in containers %}
+                        <option value="{{ container.cd_container }}">
+                            {{ container.cd_container }} - {{ container.nr_container }}
+                        </option>
+                    {% else %}
+                        <option disabled>Nenhum container cadastrado</option>
+                    {% endfor %}
+                </select>
+                </div>
+                <div class="form-group">
+                    <label for="ds_tipo_movimentacao">Tipo de Movimentação:</label>
+                    <select name="ds_tipo_movimentacao" required>
+                        <option value="Embarque">Embarque</option>
+                        <option value="Descarga">Descarga</option>
+                        <option value="Gate in">Gate in</option>
+                        <option value="Gate out">Gate out</option>
+                        <option value="Reposicionamento">Reposicionamento</option>
+                        <option value="Pesagem">Pesagem</option>
+                        <option value="Scanner">Scanner</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dt_hr_inicio">Data e hora do início:</label>
+                    <input type="datetime-local" name="dt_hr_inicio" step="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="dt_hr_fim">Data e hora do fim:</label>
+                    <input type="datetime-local" name="dt_hr_fim" step="1" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Cadastrar movimentação</button>
+                    <button type="button" onclick="location.href='{{ url_for('movimentacoes.read_movimentacao') }}'">Consultar movimentações</button>
+                </div>
+            </form>
+        </div>
+        <button class="btn" onclick="location.href='{{ url_for('home') }}'">Home</button>
+</body>
+</html>

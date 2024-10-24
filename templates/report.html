@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='table.css') }}">
+    <title>Relatório</title>
+</head>
+<body>
+    <h1>Movimentações por Cliente Registradas</h1>
+    <table id="table-2">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">
+                    <span>Cliente</span>
+                </th>
+                <th onclick="sortTable(1)">
+                    <span>Tipo</span>
+                </th>
+                <th onclick="sortTable(2)">
+                    <span>Total</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="table-row-2">
+            {% for report in reports %}
+            <tr>
+                <td>{{ report.Cliente }}</td>
+                <td>{{ report.Tipo }}</td>
+                <td>{{ report.Total }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">Não foi possível agrupar registros.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h1>Total de Containers por Cliente e Categoria</h1>
+    <table id="table">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">
+                    <span>Cliente</span>
+                </th>
+                <th onclick="sortTable(1)">
+                    <span>Categoria</span>
+                </th>
+                <th>
+                    <span onclick="sortTable(2)">Total</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="table-row">
+            {% for categoria in categorias %}
+            <tr>
+                <td>{{ categoria.Cliente }}</td>
+                <td>{{ categoria.Categoria }}</td>
+                <td>{{ categoria.Total }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">Não foi possível agrupar registros.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<button class="btn" onclick="location.href='{{ url_for('home') }}'"">Home</button>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

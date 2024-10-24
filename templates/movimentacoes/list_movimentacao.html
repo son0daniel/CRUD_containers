@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='table.css') }}">
+    <title>Movimentações</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="messages">
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+    <h1>Movimentações Registradas</h1>
+    <table id="table">
+        <thead>
+            <tr>
+                <th>
+                    <span onclick="sortTable(0)">Container</span>
+                    <input type="text" class="filter-input" placeholder="Filtrar container" onkeyup="filterTable(0)">
+                </th>
+                <th>
+                    <span onclick="sortTable(1)">Tipo</span>
+                    <input type="text" class="filter-input" placeholder="Filtrar tipo" onkeyup="filterTable(1)">
+                </th>
+                <th>
+                    <span onclick="sortTable(2)">Data de Início</span>
+                    <input type="text" class="filter-input" placeholder="Filtrar data de início" onkeyup="filterTable(2)">
+                </th>
+                <th>
+                    <span onclick="sortTable(3)">Data de Fim</span>
+                    <input type="text" class="filter-input" placeholder="Filtrar data de fim" onkeyup="filterTable(3)">
+                </th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="table-row">
+            {% for movimentacao in movimentacoes %}
+            <tr>
+                <td>{{ movimentacao.nr_container }}</td>
+                <td>{{ movimentacao.ds_tipo_movimentacao }}</td>
+                <td>{{ movimentacao.dt_hr_inicio }}</td>
+                <td>{{ movimentacao.dt_hr_fim }}</td>
+                <td>
+                    <form action="{{ url_for('movimentacoes.update_movimentacao', cd_movimentacao=movimentacao.cd_movimentacao) }}" method="get" style="display:inline;">
+                        <button id="update" type="submit">Editar</button>
+                    </form>
+                    <form action="{{ url_for('movimentacoes.delete_movimentacao', cd_movimentacao=movimentacao.cd_movimentacao) }}" method="post" style="display:inline;">
+                        <button id="delete" type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">Nenhuma movimentação encontrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button class="btn" onclick="location.href='{{ url_for('movimentacoes.create_movimentacao') }}'">Cadastrar nova movimentação</button>
+    <br>
+    <button class="btn" onclick="location.href='{{ url_for('home') }}'">Home</button>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

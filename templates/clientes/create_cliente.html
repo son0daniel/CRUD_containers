@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Cliente</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="messages">
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <div class="form">
+        <div class="title-form">
+            <span class="title-form">Cadastro de Cliente</span>
+        </div>
+        <form method="POST">
+            <div class="form-group">
+                <label for="nm_cliente">Nome:</label>
+                <input type="text" name="nm_cliente" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cd_cnpj">CNPJ:</label>
+                <input type="text" name="cd_cnpj" pattern="\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}" placeholder="00.000.000/0000-00" required>
+            </div>
+            <button type="submit">Cadastrar Cliente</button>
+            <button type="button" onclick="location.href='{{ url_for('clientes.read_cliente') }}'">Consultar Clientes</button>
+        </form>
+    </div>
+    <button class="btn" onclick="location.href='{{ url_for('home') }}'"">Home</button>
+</body>
+</html>

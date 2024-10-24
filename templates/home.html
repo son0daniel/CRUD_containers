@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Home CRUD de Containers</title>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('containers.create_container') }}">Cadastrar Container</a>
+        <a href="{{ url_for('containers.read_container') }}">Containers</a>
+        <a href="{{ url_for('clientes.create_cliente') }}">Cadastrar Cliente</a>
+        <a href="{{ url_for('clientes.read_cliente') }}">Clientes</a>
+        <a href="{{ url_for('movimentacoes.create_movimentacao') }}">Cadastrar Movimentação</a>
+        <a href="{{ url_for('movimentacoes.read_movimentacao') }}">Movimentações</a>
+        <a href="{{ url_for('reports') }}">Relatórios</a>
+    </div>
+</body>
+</html>
